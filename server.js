@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 const tickets = [];
 
 const http = require('http');
@@ -7,11 +6,7 @@ const koaBody = require('koa-body');
 
 const fullToShort = () => JSON.stringify(
   tickets.map(({
-    id,
-    name,
-    status,
-    // eslint-disable-next-line indent
-        created,
+    id, name, status, created,
   }) => ({
     id,
     name,
@@ -117,7 +112,6 @@ app.use(async (ctx, next) => {
         tickets.push({
           id: tickets.length ? tickets[tickets.length - 1].id + 1 : 1,
           name: reqName,
-
           description: reqDescription,
           status: reqStatus,
           created: Date.now(),
@@ -160,28 +154,6 @@ app.use(async (ctx, next) => {
 
 app.use(async (ctx) => {
   ctx.response.status = 405;
-});
-app.use(async (ctx) => {
-  const { method } = ctx.request.querystring;
-
-  switch (method) {
-    case 'allTickets':
-      ctx.response.body = tickets;
-      return;
-      // TODO: обработка остальных методов
-    default:
-      ctx.response.status = 404;
-  }
-});
-// eslint-disable-next-line no-undef
-xhr.addEventListener('load', () => {
-  if (xhr.status >= 200 && xhr.status < 300) {
-    try {
-      const data = JSON.parse(xhr.responseText);
-    } catch (e) {
-      console.error(e);
-    }
-  }
 });
 
 const port = process.env.PORT || 7070;
