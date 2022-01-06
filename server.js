@@ -161,6 +161,28 @@ app.use(async (ctx, next) => {
 app.use(async (ctx) => {
   ctx.response.status = 405;
 });
+app.use(async (ctx) => {
+  const { method } = ctx.request.querystring;
+
+  switch (method) {
+    case 'allTickets':
+      ctx.response.body = tickets;
+      return;
+      // TODO: обработка остальных методов
+    default:
+      ctx.response.status = 404;
+  }
+});
+// eslint-disable-next-line no-undef
+xhr.addEventListener('load', () => {
+  if (xhr.status >= 200 && xhr.status < 300) {
+    try {
+      const data = JSON.parse(xhr.responseText);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+});
 
 const port = process.env.PORT || 7070;
 http.createServer(app.callback()).listen(port);
